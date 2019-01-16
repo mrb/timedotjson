@@ -1,17 +1,6 @@
-#
-# Warning! Do Not Edit
-# --------------------
-# This is a generated file and will be overwritten
-#
 @app
-begin-app
+snow-6e3
 
 @http
 get /
 get /time
-
-@tables
-data
-  scopeID *String
-  dataID **String
-  ttl TTL
