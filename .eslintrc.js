@@ -22,6 +22,7 @@ module.exports = {
     'no-inner-declarations': 'off',
     'no-redeclare': 'off',
     // style specific
-    'no-trailing-spaces': 'error'
+    'no-trailing-spaces': 'error',
+    'no-unused-vars': 'off'
   }
-}                      
+}
