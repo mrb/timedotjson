@@ -8,6 +8,7 @@ begin-app
 
 @http
 get /
+get /time
 
 @tables
 data
