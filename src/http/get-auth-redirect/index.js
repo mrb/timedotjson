@@ -4,7 +4,7 @@ var request = require('request')
 
 // Basic Begin HTTP GET Function
 async function route(req, res) {
-
+  console.log("!")
   console.log(req.body)
   var options = {
     uri: 'https://slack.com/api/oauth.access?code='
@@ -16,8 +16,12 @@ async function route(req, res) {
   }
 
   request(options, (error, response, body) => {
+    console.log("!!")
+
     var JSONresponse = JSON.parse(body)
     if (!JSONresponse.ok){
+      console.log("!!!")
+
       console.log(JSONresponse)
 
       res({
@@ -25,6 +29,8 @@ async function route(req, res) {
             status: 200
           })
     }else{
+      console.log("!!!!")
+
       console.log(JSONresponse)
 
       res({json: "Success!", status: 201})
