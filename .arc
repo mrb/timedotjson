@@ -5,3 +5,4 @@ snow-6e3
 get /
 get /time
 get /auth
+get /auth/redirect
