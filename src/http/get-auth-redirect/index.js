@@ -3,7 +3,7 @@ let begin = require('@architect/functions')
 var request = require('request')
 
 // Basic Begin HTTP GET Function
-async function route(req, res) {
+function route(req, res) {
   console.log(req.body)
   var options = {
     uri: 'https://slack.com/api/oauth.access?code='
@@ -15,7 +15,6 @@ async function route(req, res) {
   }
 
   request(options, (error, response, body) => {
-
     var JSONresponse = JSON.parse(body)
     if (!JSONresponse.ok){
       console.log(JSONresponse)
