@@ -1,0 +1,7 @@
+{
+  "name": "begin-app-get-auth-redirect",
+  "dependencies": {
+    "@architect/functions": "latest",
+    "@begin/data": "latest"
+  }
+}
