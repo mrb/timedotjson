@@ -1,9 +1,8 @@
 // Begin enables secure sessions, express-style middleware, and more:
-let begin = require('@architect/functions')
-var request = require('request')
+const https = require("https")
 
 // Basic Begin HTTP GET Function
-function route(req, res) {
+exports.handler = async function http(req) {
   console.log(req.body)
   var options = {
     uri: 'https://slack.com/api/oauth.access?code='
@@ -14,37 +13,41 @@ function route(req, res) {
     method: 'GET'
   }
 
-  request(options, (error, response, body) => {
-    var JSONresponse = JSON.parse(body)
-    if (!JSONresponse.ok){
-      console.log(JSONresponse)
-      res({
-            json:"Error encountered: \n"+JSON.stringify(JSONresponse),
-            status: 200
-          })
-    }else{
-      console.log(JSONresponse)
-      res({json: "Success!", status: 201})
-    }
+  https.get(options.uri, res => {
+    res.setEncoding("utf8");
+    let body = "";
+    res.on("data", data => {
+      body += data;
+    });
+    res.on("end", () => {
+      var JSONresponse = JSON.parse(body)
+      if (!JSONresponse.ok){
+          console.log(JSONresponse)
+
+          return {
+            status: 200,
+            type: 'application/json',
+            body: "Error encountered: \n"+JSON.stringify(JSONresponse)
+          }
+
+      } else {
+          console.log(JSONresponse)
+
+          return {
+            status: 201,
+            type: 'application/json',
+            body: "Success!"
+          }
+      }
+    })
   })
+  return { status: 200 }
 }
 
-exports.handler = begin.http(route)
 
 
-  // app.get('/auth/redirect', (req, res) =>{
-  //
-  //   request(options, (error, response, body) => {
-  //       var JSONresponse = JSON.parse(body)
-  //       if (!JSONresponse.ok){
-  //           console.log(JSONresponse)
-  //           res.send("Error encountered: \n"+JSON.stringify(JSONresponse)).status(200).end()
-  //       }else{
-  //           console.log(JSONresponse)
-  //           res.send("Success!")
-  //       }
-  //   })
-  // })
+
+
 
 
 // Learn more about building Begin HTTP functions:
