@@ -12,12 +12,15 @@ async function route(req, res) {
 
   let result = await tiny.get({url, data})
 
+  console.log(result)
+
   if (result.ok == true){
     var account = {
       access_token: result.access_token,
       user_name: result.user.name,
       id: result.user.id
     }
+    console.log(account)
     res({
       session: {account},
       location: req._url('/')
