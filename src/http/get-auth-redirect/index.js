@@ -1,38 +1,38 @@
 // Begin enables secure sessions, express-style middleware, and more:
-// let begin = require('@architect/functions')
+let begin = require('@architect/functions')
+var request = require('request')
 
 // Basic Begin HTTP GET Function
-exports.handler = async function http(req) {
-  console.log(req)
+async function route(req, res) {
+
+  console.log(req.body)
   var options = {
-      uri: 'https://slack.com/api/oauth.access?code='
-          +req.query.code+
-          '&client_id='+process.env.CLIENT_ID+
-          '&client_secret='+process.env.CLIENT_SECRET+
-          '&redirect_uri='+process.env.REDIRECT_URI,
-      method: 'GET'
+    uri: 'https://slack.com/api/oauth.access?code='
+      +req.query.code+
+      '&client_id='+process.env.CLIENT_ID+
+      '&client_secret='+process.env.CLIENT_SECRET+
+      '&redirect_uri='+process.env.REDIRECT_URI,
+    method: 'GET'
   }
 
-  var JSONresponse = JSON.parse(req.body)
-
-  if (!JSONresponse.ok){
+  request(options, (error, response, body) => {
+    var JSONresponse = JSON.parse(body)
+    if (!JSONresponse.ok){
       console.log(JSONresponse)
 
-      return {
-        type: 'application/json',
-        status: 200,
-        body: "Error encountered: \n"+JSON.stringify(JSONresponse)
-      }
-  }else{
+      res({
+            json:"Error encountered: \n"+JSON.stringify(JSONresponse),
+            status: 200
+          })
+    }else{
       console.log(JSONresponse)
 
-      return {
-        type: 'application/json',
-        status: 201,
-        body: ("Success!")
-      }
-  }
+      res({json: "Success!", status: 201})
+    }
+  })
+}
 
+exports.handler = begin.http(route)
 
 
   // app.get('/auth/redirect', (req, res) =>{
@@ -48,7 +48,7 @@ exports.handler = async function http(req) {
   //       }
   //   })
   // })
-}
+
 
 // Learn more about building Begin HTTP functions:
 //   https://docs.begin.com/en/functions/http/

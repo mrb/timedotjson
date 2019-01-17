@@ -10,7 +10,8 @@
   "dependencies": {
     "@architect/architect": "^4.4.11",
     "@begin/data": "latest",
-    "tiny-json-http": "latest"
+    "tiny-json-http": "latest",
+    "request": "latest"
   },
   "devDependencies": {
     "aws-sdk": "^2.380.0",
