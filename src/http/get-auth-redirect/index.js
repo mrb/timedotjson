@@ -19,11 +19,9 @@ async function http(req, res) {
       id: result.user.id
     }
     res({
-      session: {account},
       location: req._url('/')
     })
   } else {
-    console.log("!")
     res({
       status: 403,
       body: "Unauthorized"
