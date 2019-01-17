@@ -1,37 +1,53 @@
 // Begin enables secure sessions, express-style middleware, and more:
 // let begin = require('@architect/functions')
 
-// TODO: modify the body object!
-let body = `
-<!doctype html>
-<html lang=en>
-  <head>
-    <meta charset=utf-8>
-    <title>Hi!</title>
-    <link rel="stylesheet" href="https://static.begin.app/starter/default.css">
-    <link href="data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" rel="icon" type="image/x-icon" />
-  </head>
-  <body>
-    <h1 class="center-text">
-      Hello world!
-    </h1>
-    <p class="center-text">
-      Your new route is ready to go!
-    </p>
-    <p class="center-text">
-      Learn more about building <a href="https://docs.begin.com/en/functions/http/" class="link" target="_blank">Begin HTTP functions here</a>.
-    </p>
-  </body>
-</html>
-`
-
 // Basic Begin HTTP GET Function
 exports.handler = async function http(req) {
   console.log(req)
-  return {
-    type: 'text/html; charset=utf8',
-    body
+  var options = {
+      uri: 'https://slack.com/api/oauth.access?code='
+          +req.query.code+
+          '&client_id='+process.env.CLIENT_ID+
+          '&client_secret='+process.env.CLIENT_SECRET+
+          '&redirect_uri='+process.env.REDIRECT_URI,
+      method: 'GET'
   }
+
+  var JSONresponse = JSON.parse(req.body)
+
+  if (!JSONresponse.ok){
+      console.log(JSONresponse)
+
+      return {
+        type: 'application/json',
+        status: 200,
+        body: "Error encountered: \n"+JSON.stringify(JSONresponse)
+      }
+  }else{
+      console.log(JSONresponse)
+
+      return {
+        type: 'application/json',
+        status: 201,
+        body: ("Success!")
+      }
+  }
+
+
+
+  // app.get('/auth/redirect', (req, res) =>{
+  //
+  //   request(options, (error, response, body) => {
+  //       var JSONresponse = JSON.parse(body)
+  //       if (!JSONresponse.ok){
+  //           console.log(JSONresponse)
+  //           res.send("Error encountered: \n"+JSON.stringify(JSONresponse)).status(200).end()
+  //       }else{
+  //           console.log(JSONresponse)
+  //           res.send("Success!")
+  //       }
+  //   })
+  // })
 }
 
 // Learn more about building Begin HTTP functions:
