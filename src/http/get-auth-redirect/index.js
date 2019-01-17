@@ -12,7 +12,7 @@ async function http(req, res) {
 
   let result = await tiny.get({url, data})
 
-  if (result.ok == True){
+  if (result.ok == true){
     var account = {
       access_token: result.access_token,
       user_name: result.user.name,
