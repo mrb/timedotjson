@@ -32,17 +32,3 @@ async function http(req, res) {
 }
 
 exports.handler = begin.html.get(http)
-
-// Response
-// {
-//   ok: true,
-//   access_token: "xoxp-104869211713-105742295013-527822168966-a28da795f9640910935d56d421795e0a",
-//   scope: "identity.basic",
-//   user: {
-//     name: "Michael Bernstein",
-//     id: "U33MU8P0D"
-//   },
-//   team: {
-//     id: "T32RK67LZ"
-//   }
-// }
