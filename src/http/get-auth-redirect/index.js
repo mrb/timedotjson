@@ -1,7 +1,7 @@
 let begin = require('@architect/functions')
 let tiny = require('tiny-json-http')
 
-async function http(req, res) {
+async function route(req, res) {
   let url = 'https://slack.com/api/oauth.access?code='
   let data = {
     code: req.query.code,
@@ -19,6 +19,7 @@ async function http(req, res) {
       id: result.user.id
     }
     res({
+      session: {account},
       location: req._url('/')
     })
   } else {
@@ -29,4 +30,4 @@ async function http(req, res) {
   }
 }
 
-exports.handler = begin.html.get(http)
+exports.handler = begin.http(route)
