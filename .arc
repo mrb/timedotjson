@@ -7,3 +7,4 @@ get /time
 get /auth
 get /auth/redirect
 get /login
+post /auth
