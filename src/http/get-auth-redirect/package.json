@@ -1,8 +1,0 @@
-{
-  "name": "begin-app-get-auth-redirect",
-  "dependencies": {
-    "@architect/functions": "latest",
-    "@begin/data": "latest",
-    "tiny-json-http": "^7.0.2"
-  }
-}
