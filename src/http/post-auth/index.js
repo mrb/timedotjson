@@ -1,15 +1,11 @@
-// Begin enables secure sessions, express-style middleware, and more:
-// let begin = require('@architect/functions')
+let begin = require('@architect/functions')
 
-// Basic Begin HTTP POST Function
-exports.handler = async function http(req) {
-  console.log(req)
-  // TODO: add some logic here!
-  return {
-    type: 'text/html; charset=utf8',
-    location: req.headers.referer
-  }
+function auth(req, res) {
+  var isLoggedIn = req.body.email === 'admin' && req.body.password === 'a-secure-password'
+  res({
+    session: {isLoggedIn},
+    location: '/'
+  })
 }
 
-// Learn more about building Begin HTTP functions:
-//   https://docs.begin.com/en/functions/http/
+exports.handler = begin.http(auth)

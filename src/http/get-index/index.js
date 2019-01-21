@@ -1,41 +1,20 @@
-exports.handler = async function http(req) {
-  console.log(req)
+let begin = require('@architect/functions')
 
-  let img = staticAsset('ornette.jpg')
-
-  let body = `
-  <!doctype html>
-  <html>
-    <head>
-      <title>This is fun!</title>
-    </head>
-    <body>Hello ƛ</body>
-    <img src=${img}>
-  </html>
-  `
-
-  return {
-    type: 'text/html; charset=utf8',
-    body
-  }
-}
-
-function staticAsset(filename) {
-
-  // these variables are always available to all lambdas
-  let env = process.env.NODE_ENV
-  let app = process.env.ARC_APP_NAME
-
-  // early exit (if we're testing then we can assume the sandbox mounted .static)
-  if (env === 'testing') {
-    return '/' + filename
+function auth(req, res, next) {
+  if (req.session.isLoggedIn) {
+    next()
   }
   else {
-    // otherwise use s3 for staging and cloudfront for production
-    let S3Staging = `https://s3-us-west-1.amazonaws.com/begin-app-staging/${app}`
-    let CFProduction = `https://static.begin.app/${app}`
-    let origin = env === 'staging'? S3Staging : CFProduction
-
-    return `${origin}/${filename}`
+    res({
+      location: '/login'
+    })
   }
 }
+
+function index(req, res) {
+  res({
+    html: `Hi there, you're logged in! <a href="/logout">logout</a>`
+  })
+}
+
+exports.handler = begin.http(auth, index)
