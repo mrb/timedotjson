@@ -1,7 +1,7 @@
 let begin = require('@architect/functions')
 
 function auth(req, res, next) {
-  if (req.session.isLoggedIn) {
+  if (req.session && req.session.isLoggedIn) {
     next()
   }
   else {
