@@ -4,6 +4,7 @@ let begin = require('@architect/functions')
 
 console.log('-1')
 
+
 async function auth(req, res, next) {
   console.log('0')
 
@@ -46,4 +47,9 @@ async function index(req, res) {
   }
 }
 
-exports.handler = begin.http(auth, index)
+
+try {
+  exports.handler = begin.http(auth, index)
+} catch(e) {
+  console.log(e)
+}
