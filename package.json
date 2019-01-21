@@ -4,7 +4,7 @@
   "description": "Begin app",
   "scripts": {
     "lint": "eslint src --ignore-pattern node_modules --fix",
-    "test": "NODE_ENV=testing tape test/*-test.js | tap-spec",
+    "test": "NODE_ENV=testing",
     "start": "NODE_ENV=testing ARC_LOCAL=1 npx sandbox"
   },
   "dependencies": {
